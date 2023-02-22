@@ -43,6 +43,11 @@ namespace Yardarm
         /// </summary>
         public bool EmbedAllSources { get; set; }
 
+        /// <summary>
+        /// Allows modifying the ServiceCollection before its built and allows customizing the default services.
+        /// </summary>
+        public Func<IServiceCollection, IServiceCollection> ModifyServiceCollection { get; set; }
+
         public Stream DllOutput
         {
             get => _dllOutput ??= new MemoryStream();
@@ -127,6 +132,11 @@ namespace Yardarm
             services = _extensions.Aggregate(services, (p, extension) => extension.ConfigureServices(p));
 
             services.AddYardarm(this, document);
+
+            if (ModifyServiceCollection != null)
+            {
+                services = ModifyServiceCollection.Invoke(services);
+            }
 
             return services.BuildServiceProvider();
         }
