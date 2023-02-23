@@ -8,14 +8,9 @@ using Microsoft.OpenApi.Interfaces;
 using Microsoft.OpenApi.Models;
 using Yardarm.Enrichment;
 using Yardarm.Generation;
-using Yardarm.Generation.Authentication;
 using Yardarm.Generation.Internal;
-using Yardarm.Generation.MediaType;
-using Yardarm.Generation.Operation;
-using Yardarm.Generation.Request;
-using Yardarm.Generation.Response;
+
 using Yardarm.Generation.Schema;
-using Yardarm.Generation.Tag;
 using Yardarm.Names;
 using Yardarm.Names.Internal;
 using Yardarm.Packaging;
@@ -38,9 +33,9 @@ namespace Yardarm
             services
                 .AddTransient<ISyntaxTreeGenerator, AssemblyInfoGenerator>()
                 .AddTransient<ISyntaxTreeGenerator, ClientGenerator>()
-                .AddTransient<ISyntaxTreeGenerator, HeaderGenerator>()
-                .AddTransient<ISyntaxTreeGenerator, MediaTypeGenerator>()
-                .AddTransient<ISyntaxTreeGenerator, ParameterGenerator>()
+                //.AddTransient<ISyntaxTreeGenerator, HeaderGenerator>()
+                //.AddTransient<ISyntaxTreeGenerator, MediaTypeGenerator>()
+                //.AddTransient<ISyntaxTreeGenerator, ParameterGenerator>()
                 .AddTransient<ISyntaxTreeGenerator, SchemaGenerator>()
                 //.AddTransient<ISyntaxTreeGenerator, SecuritySchemeGenerator>()
                 //.AddTransient<ISyntaxTreeGenerator, ResponseGenerator>()
