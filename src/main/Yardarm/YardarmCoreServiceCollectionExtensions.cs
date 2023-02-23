@@ -32,14 +32,7 @@ namespace Yardarm
         {
             services.AddDefaultEnrichers();
 
-            if (settings.ReferencedAssemblies is null || settings.ReferencedAssemblies.Count == 0)
-            {
-                services.AddTransient<IReferenceGenerator, NuGetReferenceGenerator>();
-            }
-            else
-            {
-                services.AddTransient<IReferenceGenerator, SuppliedReferenceGenerator>();
-            }
+            services.AddTransient<IReferenceGenerator, NuGetReferenceGenerator>();
 
             // Generators
             services
@@ -49,47 +42,45 @@ namespace Yardarm
                 .AddTransient<ISyntaxTreeGenerator, MediaTypeGenerator>()
                 .AddTransient<ISyntaxTreeGenerator, ParameterGenerator>()
                 .AddTransient<ISyntaxTreeGenerator, SchemaGenerator>()
-                .AddTransient<ISyntaxTreeGenerator, SecuritySchemeGenerator>()
-                .AddTransient<ISyntaxTreeGenerator, ResponseGenerator>()
-                .AddTransient<ISyntaxTreeGenerator, ResponseSetGenerator>()
-                .AddTransient<ISyntaxTreeGenerator, RequestGenerator>()
-                .AddTransient<ISyntaxTreeGenerator, TagGenerator>()
+                //.AddTransient<ISyntaxTreeGenerator, SecuritySchemeGenerator>()
+                //.AddTransient<ISyntaxTreeGenerator, ResponseGenerator>()
+                //.AddTransient<ISyntaxTreeGenerator, ResponseSetGenerator>()
+                //.AddTransient<ISyntaxTreeGenerator, RequestGenerator>()
+                //.AddTransient<ISyntaxTreeGenerator, TagGenerator>()
                 .AddTransient<IDependencyGenerator, StandardDependencyGenerator>();
 
             services.TryAddSingleton<ITypeGeneratorRegistry, TypeGeneratorRegistry>();
             services.TryAdd(new ServiceDescriptor(typeof(ITypeGeneratorRegistry<,>), typeof(TypeGeneratorRegistry<,>), ServiceLifetime.Singleton));
-            services.TryAdd(new ServiceDescriptor(typeof(ITypeGeneratorRegistry<>),
-                typeof(PrimaryGeneratorCategory.TypeGeneratorRegistryWrapper<>), ServiceLifetime.Singleton));
+            services.TryAdd(new ServiceDescriptor(typeof(ITypeGeneratorRegistry<>), typeof(PrimaryGeneratorCategory.TypeGeneratorRegistryWrapper<>), ServiceLifetime.Singleton));
 
-            services.TryAdd(new ServiceDescriptor(typeof(ITypeGeneratorFactory<,>),
-                typeof(NoopTypeGeneratorFactory<,>), ServiceLifetime.Singleton));
-            services.TryAddTypeGeneratorFactory<OpenApiHeader, HeaderTypeGeneratorFactory>();
-            services.TryAddTypeGeneratorFactory<OpenApiMediaType, MediaTypeGeneratorFactory>();
+            services.TryAdd(new ServiceDescriptor(typeof(ITypeGeneratorFactory<,>), typeof(NoopTypeGeneratorFactory<,>), ServiceLifetime.Singleton));
+            //services.TryAddTypeGeneratorFactory<OpenApiHeader, HeaderTypeGeneratorFactory>();
+            //services.TryAddTypeGeneratorFactory<OpenApiMediaType, MediaTypeGeneratorFactory>();
             services.TryAddTypeGeneratorFactory<OpenApiSchema, DefaultSchemaGeneratorFactory>();
-            services.TryAddTypeGeneratorFactory<OpenApiSecurityScheme, SecuritySchemeTypeGeneratorFactory>();
-            services.TryAddTypeGeneratorFactory<OpenApiResponse, ResponseTypeGeneratorFactory>();
-            services.TryAddTypeGeneratorFactory<OpenApiResponses, ResponseSetTypeGeneratorFactory>();
-            services.TryAddTypeGeneratorFactory<OpenApiOperation, RequestTypeGeneratorFactory>();
-            services.TryAddTypeGeneratorFactory<OpenApiParameter, ParameterTypeGeneratorFactory>();
-            services.TryAddTypeGeneratorFactory<OpenApiTag, TagTypeGeneratorFactory>();
-            services.TryAddTypeGeneratorFactory<OpenApiTag, TagImplementationCategory, TagImplementationTypeGeneratorFactory>();
-            services.TryAddTypeGeneratorFactory<OpenApiUnknownResponse, UnknownResponseTypeGeneratorFactory>();
+            //services.TryAddTypeGeneratorFactory<OpenApiSecurityScheme, SecuritySchemeTypeGeneratorFactory>();
+            //services.TryAddTypeGeneratorFactory<OpenApiResponse, ResponseTypeGeneratorFactory>();
+            //services.TryAddTypeGeneratorFactory<OpenApiResponses, ResponseSetTypeGeneratorFactory>();
+            //services.TryAddTypeGeneratorFactory<OpenApiOperation, RequestTypeGeneratorFactory>();
+            //services.TryAddTypeGeneratorFactory<OpenApiParameter, ParameterTypeGeneratorFactory>();
+            //services.TryAddTypeGeneratorFactory<OpenApiTag, TagTypeGeneratorFactory>();
+            //services.TryAddTypeGeneratorFactory<OpenApiTag, TagImplementationCategory, TagImplementationTypeGeneratorFactory>();
+            //services.TryAddTypeGeneratorFactory<OpenApiUnknownResponse, UnknownResponseTypeGeneratorFactory>();
 
-            services.AddSingleton<IRequestMemberGenerator, AddHeadersMethodGenerator>();
-            services.AddSingleton<IRequestMemberGenerator, BuildContentMethodGenerator>();
-            services.AddSingleton<IRequestMemberGenerator, BuildRequestMethodGenerator>();
-            services.AddSingleton<IRequestMemberGenerator, BuildUriMethodGenerator>();
-            services.AddSingleton<IRequestMemberGenerator, SerializationDataPropertyGenerator>();
-            services.AddSingleton<IResponseMethodGenerator, GetBodyMethodGenerator>();
-            services.AddSingleton<IResponseMethodGenerator, BodyConstructorMethodGenerator>();
-            services.AddSingleton<IResponseMethodGenerator, NoBodyConstructorMethodGenerator>();
-            services.TryAddSingleton<IOperationMethodGenerator, OperationMethodGenerator>();
-            services.TryAddSingleton<IMediaTypeSelector, PriorityMediaTypeSelector>();
+            //services.AddSingleton<IRequestMemberGenerator, AddHeadersMethodGenerator>();
+            //services.AddSingleton<IRequestMemberGenerator, BuildContentMethodGenerator>();
+            //services.AddSingleton<IRequestMemberGenerator, BuildRequestMethodGenerator>();
+            //services.AddSingleton<IRequestMemberGenerator, BuildUriMethodGenerator>();
+            //services.AddSingleton<IRequestMemberGenerator, SerializationDataPropertyGenerator>();
+            //services.AddSingleton<IResponseMethodGenerator, GetBodyMethodGenerator>();
+            //services.AddSingleton<IResponseMethodGenerator, BodyConstructorMethodGenerator>();
+            //services.AddSingleton<IResponseMethodGenerator, NoBodyConstructorMethodGenerator>();
+            //services.TryAddSingleton<IOperationMethodGenerator, OperationMethodGenerator>();
+            //services.TryAddSingleton<IMediaTypeSelector, PriorityMediaTypeSelector>();
 
             // Need to be able to specifically inject this one as well
-            services.TryAddSingleton(serviceProvider =>
-                serviceProvider.GetRequiredService<IEnumerable<IRequestMemberGenerator>>()
-                    .OfType<IBuildContentMethodGenerator>().First());
+            //services.TryAddSingleton(serviceProvider =>
+            //    serviceProvider.GetRequiredService<IEnumerable<IRequestMemberGenerator>>()
+            //        .OfType<IBuildContentMethodGenerator>().First());
 
             services.TryAddSingleton<IPackageSpecGenerator, DefaultPackageSpecGenerator>();
             services.TryAddSingleton(serviceProvider => serviceProvider.GetRequiredService<IPackageSpecGenerator>().Generate());
@@ -100,7 +91,7 @@ namespace Yardarm
             services.TryAddSingleton<INameFormatterSelector, NameFormatterSelector>();
             services.TryAddSingleton<INamespaceProvider, DefaultNamespaceProvider>();
             services.TryAddSingleton<INameConverterRegistry>(_ => NameConverterRegistry.CreateDefaultRegistry());
-            services.TryAddSingleton<IHttpResponseCodeNameProvider, HttpResponseCodeNameProvider>();
+            //services.TryAddSingleton<IHttpResponseCodeNameProvider, HttpResponseCodeNameProvider>();
             services.TryAddSingleton<IRootNamespace, RootNamespace>();
             services.TryAddSingleton<IApiNamespace, ApiNamespace>();
             services.TryAddSingleton<IAuthenticationNamespace, AuthenticationNamespace>();

@@ -127,24 +127,24 @@ namespace Yardarm
             var enrichers = context.GenerationServices.GetRequiredService<IEnumerable<ICompilationEnricher>>();
             compilation = await compilation.EnrichAsync(enrichers, cancellationToken);
 
-            ImmutableArray<Diagnostic> additionalDiagnostics;
-            var assemblyLoadContext = new YardarmAssemblyLoadContext();
-            try
-            {
-                var sourceGenerators = context.GenerationServices.GetRequiredService<NuGetRestoreProcessor>()
-                    .GetSourceGenerators(context.NuGetRestoreInfo!.Providers, context.NuGetRestoreInfo!.LockFile,
-                        targetFramework, assemblyLoadContext);
+            ImmutableArray<Diagnostic> additionalDiagnostics = new ImmutableArray<Diagnostic>();
+            //var assemblyLoadContext = new YardarmAssemblyLoadContext();
+            //try
+            //{
+            //    var sourceGenerators = context.GenerationServices.GetRequiredService<NuGetRestoreProcessor>()
+            //        .GetSourceGenerators(context.NuGetRestoreInfo!.Providers, context.NuGetRestoreInfo!.LockFile,
+            //            targetFramework, assemblyLoadContext);
 
-                // Execute the source generators
-                compilation = ExecuteSourceGenerators(compilation,
-                    sourceGenerators,
-                    out additionalDiagnostics,
-                    cancellationToken);
-            }
-            finally
-            {
-                assemblyLoadContext.Unload();
-            }
+            //    // Execute the source generators
+            //    compilation = ExecuteSourceGenerators(compilation,
+            //        sourceGenerators,
+            //        out additionalDiagnostics,
+            //        cancellationToken);
+            //}
+            //finally
+            //{
+            //    assemblyLoadContext.Unload();
+            //}
 
             return (compilation.Emit(dllOutput,
                     pdbStream: pdbOutput,
@@ -232,20 +232,20 @@ namespace Yardarm
             }
         }
 
-        private CSharpCompilation ExecuteSourceGenerators(CSharpCompilation compilation, IReadOnlyList<ISourceGenerator>? generators,
-            out ImmutableArray<Diagnostic> diagnostics, CancellationToken cancellationToken = default)
-        {
-            if (generators is null || generators.Count == 0)
-            {
-                diagnostics = ImmutableArray<Diagnostic>.Empty;
-                return compilation;
-            }
+        //private CSharpCompilation ExecuteSourceGenerators(CSharpCompilation compilation, IReadOnlyList<ISourceGenerator>? generators,
+        //    out ImmutableArray<Diagnostic> diagnostics, CancellationToken cancellationToken = default)
+        //{
+        //    if (generators is null || generators.Count == 0)
+        //    {
+        //        diagnostics = ImmutableArray<Diagnostic>.Empty;
+        //        return compilation;
+        //    }
 
-            var driver = CSharpGeneratorDriver.Create(generators);
+        //    var driver = CSharpGeneratorDriver.Create(generators);
 
-            driver.RunGeneratorsAndUpdateCompilation(compilation, out var newCompilation, out diagnostics, cancellationToken);
+        //    driver.RunGeneratorsAndUpdateCompilation(compilation, out var newCompilation, out diagnostics, cancellationToken);
 
-            return (CSharpCompilation) newCompilation;
-        }
+        //    return (CSharpCompilation) newCompilation;
+        //}
     }
 }

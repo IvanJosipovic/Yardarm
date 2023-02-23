@@ -15,11 +15,11 @@ namespace Yardarm.Enrichment
             services
                 .AddDefaultCompilationEnrichers()
                 .AddDefaultPackagingEnrichers()
-                .AddDefaultAuthenticationEnrichers()
-                .AddDefaultSchemaEnrichers()
-                .AddDefaultRequestEnrichers()
-                .AddDefaultResponseEnrichers()
-                .AddDefaultTagEnrichers();
+                //.AddDefaultAuthenticationEnrichers()
+                .AddDefaultSchemaEnrichers();
+                //.AddDefaultRequestEnrichers()
+                //.AddDefaultResponseEnrichers()
+                //.AddDefaultTagEnrichers();
 
         public static IServiceCollection AddCreateDefaultRegistryEnricher<T>(this IServiceCollection services)
             where T : class, ICreateDefaultRegistryEnricher =>

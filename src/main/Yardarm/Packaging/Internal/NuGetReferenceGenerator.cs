@@ -14,7 +14,7 @@ using Yardarm.Generation;
 
 namespace Yardarm.Packaging.Internal
 {
-    internal class NuGetReferenceGenerator : IReferenceGenerator
+    public class NuGetReferenceGenerator : IReferenceGenerator
     {
         private const string NetStandardLibrary = "NETStandard.Library";
 

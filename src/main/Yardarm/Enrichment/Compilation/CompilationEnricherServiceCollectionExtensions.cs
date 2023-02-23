@@ -9,7 +9,7 @@ namespace Yardarm.Enrichment.Compilation
                 .AddAssemblyInfoEnricher<TargetRuntimeAssemblyInfoEnricher>()
                 .AddAssemblyInfoEnricher<VersionAssemblyInfoEnricher>()
                 .AddCompilationEnricher<ReferenceCompilationEnricher>()
-                .AddCompilationEnricher<ResourceFileCompilationEnricher>()
+                //.AddCompilationEnricher<ResourceFileCompilationEnricher>()
                 .AddCompilationEnricher<SyntaxTreeCompilationEnricher>()
                 .AddCompilationEnricher<OpenApiCompilationEnricher>()
                 .AddCompilationEnricher<DefaultTypeSerializersEnricher>()
